@@ -1,10 +1,7 @@
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-jupyter
-lightgbm
-xgboost
-tensorflow
-keras
+pandas>=2.2
+numpy>=1.26
+scikit-learn==1.7.1
+xgboost==3.0.4
+lightgbm>=4.3
+catboost>=1.2
+tqdm>=4.66
