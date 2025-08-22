@@ -17,5 +17,7 @@ Output CSV will be saved to notebooks/outputs/submissions/
 
 ## Notes
 Categorical handling: native categories in LightGBM and CatBoost; one-hot for XGBoost.
+
 Feature set: curated interactions and clipping for duration, cyclic encodings for month/day, plus a few boolean flags.
+
 Stacking: 5-fold out-of-fold predictions of base models are used to train a logistic regression meta-model.
