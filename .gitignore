@@ -2,6 +2,7 @@
 .env
 .vscode/
 .ipynb_checkpoints/
+__pycache__/
 
 data/
 notebooks/outputs/cache/
@@ -9,6 +10,7 @@ notebooks/outputs/submissions/
 outputs/
 submissions/
 backups/
+*.npy
+*.csv
 
-.DS_Store
 .DS_Store
