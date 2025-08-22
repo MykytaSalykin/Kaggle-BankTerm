@@ -1,0 +1,14 @@
+.venv/
+.env
+.vscode/
+.ipynb_checkpoints/
+
+data/
+notebooks/outputs/cache/
+notebooks/outputs/submissions/
+outputs/
+submissions/
+backups/
+
+.DS_Store
+.DS_Store
