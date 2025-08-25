@@ -1,16 +1,10 @@
 .venv/
-.env
-.vscode/
-.ipynb_checkpoints/
-__pycache__/
+.DS_Store
 
 data/
+
 notebooks/outputs/cache/
 notebooks/outputs/submissions/
-outputs/
-submissions/
-backups/
 *.npy
-*.csv
 
-.DS_Store
+.ipynb_checkpoints/
