@@ -79,22 +79,15 @@ Outputs appear in notebooks/outputs/submissions/.
 
 
 🧠 Why this setup
-Determinism & speed. Everything fits on CPU and reproduces exactly thanks to fixed seeds and cached OOF.
-Clarity > complexity. Strong baselines with clean feature logic beat fragile over-tuned stacks in most tabular comps.
-Extendability. Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into the stacker.
 
+Determinism & speed. 
+Everything fits on CPU and reproduces exactly thanks to fixed seeds and cached OOF.
 
-📁 Project structure
-├── data/                          # train/test CSVs (not tracked)
-├── notebooks/
-│   ├── 01_eda.ipynb              # clean EDA with checks/drift/mutual info
-│   ├── 02_baselines.ipynb        # features + models + caching + stack
-│   └── outputs/
-│       ├── cache/                # .npy OOF/TEST files
-│       └── submissions/          # final CSVs for Kaggle
-├── requirements.txt
-├── run_stack.py                  # builds final stack from the cache
-└── README.md
+Clarity > complexity. 
+Strong baselines with clean feature logic beat fragile over-tuned stacks in most tabular comps.
+
+Extendability. 
+Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into the stacker.
 
 
 📜 License
