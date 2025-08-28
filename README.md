@@ -62,8 +62,9 @@ data/
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-Reproduce baselines (recommended)
+3) **Reproduce baselines (recommended)**
 Open notebooks/02_baselines.ipynb
 Run all cells → this will train models and populate
 notebooks/outputs/cache/*_oof.npy
@@ -73,6 +74,7 @@ notebooks/outputs/submissions/final_stack_*.csv
 If cache already exists, you can regenerate only the final submission
 ```bash
 python run_stack.py
+```
 Outputs appear in notebooks/outputs/submissions/.
 
 
