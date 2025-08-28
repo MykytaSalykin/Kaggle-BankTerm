@@ -63,7 +63,7 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-3) Reproduce baselines (recommended)
+Reproduce baselines (recommended)
 Open notebooks/02_baselines.ipynb
 Run all cells → this will train models and populate
 notebooks/outputs/cache/*_oof.npy
@@ -93,6 +93,7 @@ Extendability. Add a new model? Just drop its OOF/TEST into cache and it instant
 ├── requirements.txt
 ├── run_stack.py                  # builds final stack from the cache
 └── README.md
+
 
 📜 License
 MIT License — free to use and adapt.
