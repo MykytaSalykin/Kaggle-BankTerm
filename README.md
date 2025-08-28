@@ -1,23 +1,98 @@
 # Bank Term Deposit — Binary Classification (Kaggle)
 
-- **Metric:** ROC–AUC  
-- **CV:** StratifiedKFold(n_splits=5, shuffle=True, random_state=42)  
-- **Baseline models:** LightGBM (3 seeds + pos_weight), CatBoost (CPU), XGBoost (OHE). Meta-learner: Logistic Regression (stacking).  
-- **Hardware:** CPU-only friendly.  
+**Goal:** predict whether a client will subscribe to a term deposit after a marketing contact.  
+**Metric:** ROC–AUC (higher is better)
 
-## Quick start
-1. Place `train.csv` and `test.csv` into `data/`.
-2. (Optional) Open `notebooks/02_baselines.ipynb` and run; this trains all base models and fills `notebooks/outputs/cache/`.
-3. Or if cache is already there, run:
-   ```bash
-   python run_stack.py
+This repo provides a clean, CPU-friendly pipeline that is:
+- **Reproducible** — deterministic CV and cached OOF/test predictions
+- **Practical** — fast to train locally, simple to extend
+- **Competitive** — strong single models + a simple stacker
 
-Output CSV will be saved to notebooks/outputs/submissions/
+---
+
+## 🔍 What’s inside
+
+- **Feature set**  
+  Curated, competition-proven transforms:
+  - clipped and log-scaled `duration`, `pdays` handling (`-1` → “not contacted” flag + log on positives)
+  - per-call intensity `duration_per_call`
+  - cyclic encodings for `month`/`day`
+  - simple interactions (e.g. `duration × cellular`)
+  - careful dtype management for native categorical support
+
+- **Models**
+  - **LightGBM (GBDT):** 3 seeds + a `scale_pos_weight` variant  
+  - **CatBoost (CPU)** with native categorical handling  
+  - **XGBoost (hist)** with one-hot for categoricals (via `OneHotEncoder`)
+  - **Meta-learner:** Logistic Regression stacking on OOFs
+
+- **Cross-validation**  
+  `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`  
+  OOF predictions are cached to `notebooks/outputs/cache/`.
+
+---
+
+## 📊 Current results (5-fold OOF AUC)
+
+| Model               | OOF AUC  |
+|---------------------|----------|
+| LightGBM (seed=42)  | **0.97103** |
+| LightGBM (seed=7)   | **0.97106** |
+| LightGBM (+pos_w)   | 0.97060  |
+| CatBoost (CPU)      | 0.96733  |
+| XGBoost (OHE)       | 0.96922  |
+| **Stack (LR on OOF)** | **0.97091** |
+
+> Notes:
+> - LightGBM singles are the strongest; stack is intentionally simple and transparent.
+> - Scores are obtained on the provided `data/train.csv` with the feature set in `02_baselines.ipynb`.
+
+---
+
+## 🚀 Quick start
+
+1) **Data**  
+Place files into `./data/`:
+data/
+├─ train.csv
+└─ test.csv
+
+2) **Environment**
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+3) Reproduce baselines (recommended)
+Open notebooks/02_baselines.ipynb
+Run all cells → this will train models and populate
+notebooks/outputs/cache/*_oof.npy
+notebooks/outputs/cache/*_test.npy
+notebooks/outputs/submissions/final_stack_*.csv
+
+If cache already exists, you can regenerate only the final submission
+```bash
+python run_stack.py
+Outputs appear in notebooks/outputs/submissions/.
 
 
-## Notes
-Categorical handling: native categories in LightGBM and CatBoost; one-hot for XGBoost.
+🧠 Why this setup
+Determinism & speed. Everything fits on CPU and reproduces exactly thanks to fixed seeds and cached OOF.
+Clarity > complexity. Strong baselines with clean feature logic beat fragile over-tuned stacks in most tabular comps.
+Extendability. Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into the stacker.
 
-Feature set: curated interactions and clipping for duration, cyclic encodings for month/day, plus a few boolean flags.
 
-Stacking: 5-fold out-of-fold predictions of base models are used to train a logistic regression meta-model.
+📁 Project structure
+├── data/                          # train/test CSVs (not tracked)
+├── notebooks/
+│   ├── 01_eda.ipynb              # clean EDA with checks/drift/mutual info
+│   ├── 02_baselines.ipynb        # features + models + caching + stack
+│   └── outputs/
+│       ├── cache/                # .npy OOF/TEST files
+│       └── submissions/          # final CSVs for Kaggle
+├── requirements.txt
+├── run_stack.py                  # builds final stack from the cache
+└── README.md
+
+📜 License
+MIT License — free to use and adapt.
