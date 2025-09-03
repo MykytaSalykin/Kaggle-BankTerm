@@ -49,6 +49,21 @@ This repo provides a clean, CPU-friendly pipeline that is:
 
 ---
 
+### Public leaderboard (ensembling in `score_lab/`)
+
+| Submission                  | LB Score | Notes                         |
+|-----------------------------|----------|-------------------------------|
+| **A2 mean-rank all**        | **0.97678** | Best public score (The 10% best) |
+| Geometric mean (all models) | 0.97677  | Very close to best            |
+| Diverse mean-rank top6      | 0.97636  | Slightly worse                |
+| Weighted blends (C1)        | ~0.972   | Overfit, dropped              |
+
+> ✅ Best LB score: **0.97678**.  
+> Stacking + blind blending explored in `score_lab/`, but baselines remain clean and interpretable.
+
+
+---
+
 ## 🚀 Quick start
 
 1) **Data**  
@@ -66,7 +81,7 @@ pip install -r requirements.txt
 
 3) **Reproduce baselines (recommended)**
 Open notebooks/02_baselines.ipynb
-Run all cells → this will train models and populate
+Run all cells → this will train models and populate:
 notebooks/outputs/cache/*_oof.npy
 notebooks/outputs/cache/*_test.npy
 notebooks/outputs/submissions/final_stack_*.csv
@@ -88,6 +103,23 @@ Strong baselines with clean feature logic beat fragile over-tuned stacks in most
 
 Extendability. 
 Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into the stacker.
+
+
+## 📁 Project structure
+├── data/                          # train/test CSVs (not tracked)
+├── notebooks/
+│   ├── 01_eda.ipynb              # clean EDA with checks/drift/mutual info
+│   ├── 02_baselines.ipynb        # features + models + caching + stack
+│   └── outputs/
+│       ├── cache/                # .npy OOF/TEST files
+│       └── submissions/          # final CSVs for Kaggle
+├── score_lab/                    # extra ensembling "for leaderboard only"
+│   ├── pool/                     # external/public submissions
+│   ├── ensemble.py               # blending recipes
+│   └── notes.md                  # LB tracking
+├── requirements.txt
+├── run_stack.py                  # builds final stack from the cache
+└── README.md
 
 
 📜 License
