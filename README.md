@@ -106,8 +106,8 @@ Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into t
 
 
 ## 📁 Project structure
-```
 
+```
 ├── data/                          # train/test CSVs (not tracked)
 ├── notebooks/
 │   ├── 01_eda.ipynb              # clean EDA with checks/drift/mutual info
@@ -122,7 +122,6 @@ Add a new model? Just drop its OOF/TEST into cache and it instantly plugs into t
 ├── requirements.txt
 ├── run_stack.py                  # builds final stack from the cache
 └── README.md
-
 ```
 
 📜 License
