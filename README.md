@@ -12,6 +12,10 @@ This repo provides a clean, CPU-friendly pipeline that is:
 
 ## 🔍 What’s inside
 
+- **Data validation & exploration**  
+  - performed exploratory analysis in **SQL** and **Excel** to cross-check data integrity, spot anomalies and validate preprocessing logic  
+  - applied basic **statistical tests** to ensure features were consistent and reliable before modeling
+
 - **Feature set**  
   Curated, competition-proven transforms:
   - clipped and log-scaled `duration`, `pdays` handling (`-1` → “not contacted” flag + log on positives)
